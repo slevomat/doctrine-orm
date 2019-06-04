@@ -548,7 +548,7 @@ abstract class AbstractEntityPersister implements CachedEntityPersister
         $hasCache  = ($persister instanceof CachedPersister);
         $key       = null;
 
-        if ( ! $hasCache) {
+        if ( ! $hasCache || !$this->uow->isInIdentityMap($coll->getOwner())) {
             return $this->persister->loadManyToManyCollection($assoc, $sourceEntity, $coll);
         }
 
@@ -583,7 +583,7 @@ abstract class AbstractEntityPersister implements CachedEntityPersister
         $persister = $this->uow->getCollectionPersister($assoc);
         $hasCache  = ($persister instanceof CachedPersister);
 
-        if ( ! $hasCache) {
+        if ( ! $hasCache || !$this->uow->isInIdentityMap($coll->getOwner())) {
             return $this->persister->loadOneToManyCollection($assoc, $sourceEntity, $coll);
         }
 
